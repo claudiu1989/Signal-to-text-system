@@ -9,6 +9,7 @@ import numpy as np
 # Internal modules/packages
 from DataImporter import data_importer, TimeSeries
 
+RELATIVE_WINDOW_SIZES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
 
 NAN_VALIDATION_THRESHOLD = 0.1
 
@@ -109,7 +110,7 @@ def trendDetection(partial_series):
         trend_magnitude = None
     return trend, trend_magnitude, relative_variation, partial_series[0], partial_series[-1]
 
-def getTrendEvents(series:TimeSeries, relative_window_size:float):
+def getTrendEventsForWindow(series:TimeSeries, relative_window_size:float):
     length = series.max_year - series.min_year
     window_size = int(relative_window_size*length)
     all_trend_events = []
@@ -123,10 +124,22 @@ def getTrendEvents(series:TimeSeries, relative_window_size:float):
             all_trend_events.append(event)
     return all_trend_events
 
+# Main function
+def getTrendEvents(list_of_series:TimeSeries):
+    trends_events_for_series = {}
+    for series in list_of_series:
+        for relative_window_size in RELATIVE_WINDOW_SIZES:
+            all_trend_events = getTrendEventsForWindow(series, relative_window_size)
+            if len(all_trend_events)>0:
+                trends_events_for_series[series.name] = all_trend_events
+                break
+    return trends_events_for_series
+
 if __name__ == '__main__':
     data_path = f"{os.path.dirname(os.path.realpath(__file__))}//DataWorldBank//Romania_data_test.csv"
     all_series = data_importer(data_path)
-    #print(data)
-    all_trend_events = getTrendEvents(all_series[7], 0.3)
-    for event in all_trend_events:
-        event.print()
+    all_trend_events = getTrendEvents(all_series)
+    for name, events in all_trend_events.items():
+        print(name)
+        for event in events:
+            event.print()
