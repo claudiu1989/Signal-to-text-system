@@ -7,7 +7,7 @@ from enum import Enum
 import numpy as np
 
 # Internal modules/packages
-from DataImporter import data_importer, TimeSeries
+from data_importer import data_importer, TimeSeries
 
 RELATIVE_WINDOW_SIZES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
 
@@ -136,7 +136,10 @@ def getTrendEvents(list_of_series:TimeSeries):
     return trends_events_for_series
 
 if __name__ == '__main__':
-    data_path = f"{os.path.dirname(os.path.realpath(__file__))}//DataWorldBank//Romania_data_test.csv"
+     # Test
+    cr_dir = os.path.dirname(os.path.realpath(__file__))
+    parent_dir = os.path.split(cr_dir)[0]
+    data_path = os.path.join(parent_dir, 'DataWorldBank', 'Romania_data_test.csv')
     all_series = data_importer(data_path)
     all_trend_events = getTrendEvents(all_series)
     for name, events in all_trend_events.items():

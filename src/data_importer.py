@@ -13,7 +13,7 @@ class TimeSeries:
         self.max_year = max_year
 
 def load_data(data_path):
-    data = pd.read_csv(f"{os.path.dirname(os.path.realpath(__file__))}//DataWorldBank//Romania_data_test.csv")
+    data = pd.read_csv(data_path)
     return data
 
 def plot_time_series(years, values, indicator_name):
@@ -47,11 +47,11 @@ def data_importer(data_file_path):
     return all_series
 
 if __name__ == '__main__':
-    data_path = f"{os.path.dirname(os.path.realpath(__file__))}//DataWorldBank//Romania_data_test.csv"
+    # Test
+    cr_dir = os.path.dirname(os.path.realpath(__file__))
+    parent_dir = os.path.split(cr_dir)[0]
+    data_path = os.path.join(parent_dir, 'DataWorldBank', 'Romania_data_test.csv')
     data = load_data(data_path)
-    #series_name, series = get_series(data, 2, 2, 4)
-    #min_year, max_year = get_min_max_years(data, 4)
-    #plot_time_series(range(min_year, max_year+1), series, series_name)
     all = get_all_Series(data)
     
 

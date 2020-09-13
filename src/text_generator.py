@@ -60,7 +60,6 @@ def generateTextFromPCFG(PCFG):
     return work_list
 
 if __name__ == '__main__':
-    #p = [0.5,0.2,0.3]
-    #sample = getProbabilitiesForProductionRules(p)
+    # Test
     work_list = generateTextFromPCFG(PCFG)
     print(work_list)
