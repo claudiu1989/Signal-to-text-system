@@ -5,8 +5,6 @@ import os
 from data_importer import data_importer, TimeSeries
 from facts_detector import getTrendEvents, TrendMagnitude, Trend
 
-theme = ['indicator', 'period']
-
 # The trend events are interesting if they span long periods, are more extrem and more general 
 
 MAGNITUDE_WEIGHT = 0.5
