@@ -59,6 +59,15 @@ def getInterestingEvents(all_events_by_series):
             events_and_importances[series_name].append((event, importance))
     return events_and_importances
 
+def filterOutUnimportantEvets(events_and_importances, importance_threshold):
+
+    filtered_events_and_importances = dict()
+    for series_name in events_and_importances:
+        filtered_events_for_cr_series = list(filter(lambda event: event[1]>=importance_threshold, events_and_importances[series_name]))
+        if filtered_events_for_cr_series:
+            filtered_events_and_importances[series_name] = filtered_events_for_cr_series
+    return filtered_events_and_importances
+
 if __name__ == '__main__':
      # Test
     cr_dir = os.path.dirname(os.path.realpath(__file__))
@@ -66,5 +75,7 @@ if __name__ == '__main__':
     data_path = os.path.join(parent_dir, 'DataWorldBank', 'Romania_data_test.csv')
     all_events_by_series = data_importer(data_path)
     all_trend_events = getTrendEvents(all_events_by_series)
-    print(getInterestingEvents(all_trend_events))
-    
+    events = getInterestingEvents(all_trend_events)
+    #print(events)
+    filtered_events = filterOutUnimportantEvets(events,importance_threshold=0.5)
+    print(filtered_events)
