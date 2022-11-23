@@ -14,6 +14,29 @@ PCFG = {'<text>':[(['<paragraph>', '<text_fragment>'],0.5), (['<paragraph>'], 0.
                       (['The', '[series_name]', 'has', '[change]','[change_rate]','between', '[interval]'],1.0/no_distinct_sentences)]
         }
 
+C_PCFG = {'<text>':[(['<intro_paragraph>', '<text_fragment>', '<concluding_paragraph>'], 1.0)], 
+        '<text_fragment>':[(['<paragraph>', '<text_fragment>'],0.5), (['<paragraph>'], 0.5)],
+        '<paragraph>':[(['<sentence>', '<paragraph>', '\n'],0.5), (['<sentence>'], 0.5)],
+        '<sentence>':[(['The', '[series_name]', 'has', '[change]','between', '[interval]'],1.0/no_distinct_sentences),
+                      (['The', '[series_name]', 'has', '[change]','[change_rate]','between', '[interval]'],1.0/no_distinct_sentences),
+                      (['The', '[series_name]', 'has', '[change]','[change_rate]','between', '[interval]'],1.0/no_distinct_sentences)]
+        }
+
+def generatePCFG(events_and_importances):
+    C_PCFG = {'<text>':[(['<intro_paragraph>', '<text_fragment>', '<concluding_paragraph>'], 1.0)]}
+    C_PCFG['<intro_paragraph>'] = [('In the next paragraphs you will find the main findings.', 0.25),
+                                   ('The following text contains a summary of the main findings.', 0.25),
+                                   ('In this text you will find the most interesting aspects of the data.', 0.25),
+                                   ('We are now presenting the main conclusions.', 0.25)]
+    
+    C_PCFG['<concluding_paragraph>'] = [('These were the main findings.', 0.25),
+                                   ('We hope you find the analysis useful.', 0.25),
+                                   ('These were the most interesting facts about the data.', 0.25),
+                                   ('', 0.25)]
+    
+    filtered_events_and_importances = dict()
+    for 
+
 def getRandomIndex(p):
     sample = np.random.multinomial(1, p, size=1)
     return np.where(sample==1.0)[1][0]
@@ -57,6 +80,7 @@ def generateTextFromPCFG(PCFG):
         else:
             non_terminals_available = False
         print(work_list)
+
     return work_list
 
 if __name__ == '__main__':
