@@ -33,8 +33,8 @@ def generatePCFG(events_and_importances):
         sentences = list()
         C_PCFG[f'<paragraph{i}>'] = [(sentences, 1.0)]
         for j, event in enumerate(series_events[1]):
-            C_PCFG[f'<paragraph{i}>'][0][0].append(f'<sentence{j}>')
-            C_PCFG[f'<sentence{j}>'] = [([f'A {convertTrendEnumObjectToWord(event[0].trend)} trend had been detected between {event[0].start_year} and {event[0].end_year} for the series "{series_events[0].lower()}". '], 0.25), 
+            C_PCFG[f'<paragraph{i}>'][0][0].append(f'<sentence{i}{j}>')
+            C_PCFG[f'<sentence{i}{j}>'] = [([f'A {convertTrendEnumObjectToWord(event[0].trend)} trend had been detected between {event[0].start_year} and {event[0].end_year} for the series "{series_events[0].lower()}". '], 0.25), 
                 ([f'For the series "{series_events[0].lower()}", a {convertTrendEnumObjectToWord(event[0].trend)} trend was detected between {event[0].start_year} and {event[0].end_year}. '], 0.25),
                 ([f'For the indicator "{series_events[0].lower()}", a {convertTrendEnumObjectToWord(event[0].trend)} trend was detected in the time interval {event[0].start_year} - {event[0].end_year}. '], 0.25), 
                 ([f'Between {event[0].start_year} and {event[0].end_year}, a {convertTrendEnumObjectToWord(event[0].trend)} trend was detected  for the indicator "{series_events[0].lower()}". '], 0.25)]
