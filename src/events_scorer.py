@@ -69,7 +69,7 @@ def filterOutUnimportantEvets(events_and_importances, importance_threshold):
     return filtered_events_and_importances
 
 if __name__ == '__main__':
-     # Test
+    # Test
     cr_dir = os.path.dirname(os.path.realpath(__file__))
     parent_dir = os.path.split(cr_dir)[0]
     data_path = os.path.join(parent_dir, 'DataWorldBank', 'Romania_data_test.csv')
